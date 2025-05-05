@@ -10,7 +10,7 @@ public class Main extends JFrame{
 		this.setLocationRelativeTo(null);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
-		this.setResizable(true);
+		this.setResizable(false);
 	}
 	public static void main(String[] args) {
 		new Main();

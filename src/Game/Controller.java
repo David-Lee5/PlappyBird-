@@ -21,7 +21,8 @@ public class Controller extends JPanel implements ActionListener, KeyListener {
 	
 	private boolean gameOver= false;
 	private double score = 0;
-
+	
+	private Sound sound;
 	
 	public Controller() {
 		
@@ -38,7 +39,7 @@ public class Controller extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		
-		bird = new Bird(0, 200, Consts.bird_Width, Consts.bird_Height, birdImg);
+		bird = new Bird(100, 200, Consts.bird_Width, Consts.bird_Height, birdImg);
 		pipes = new ArrayList<Pipe>();
 		placePipesTimer = new Timer(1500, new ActionListener() {
 			@Override
@@ -73,6 +74,7 @@ public class Controller extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		if(e.getKeyCode() == KeyEvent.VK_SPACE){
 			bird.setVelocityY(-9);
+			sound.playSound("/Sound/plappy_sound.wav");
 			if (gameOver) {
 				restart();
 			}
@@ -100,7 +102,7 @@ public class Controller extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.white);
 		g.setFont(new Font("Courier New", Font.BOLD, 40));
 		if(gameOver) g.drawString("Game Over : " + String.valueOf((int) score), Consts.WIDTH/2-150, Consts.HEIGHT/2);
-		else g.drawString(String.valueOf((int) score), 10, 35);
+		else g.drawString(String.valueOf((int) score), Consts.WIDTH/2 -30, 35);
 	}
 	public void placePipes() {
 		
@@ -110,7 +112,7 @@ public class Controller extends JPanel implements ActionListener, KeyListener {
 		Pipe topPipe= new Pipe(Consts.WIDTH, topPipeY, Consts.pipe_Width, Consts.pipe_Height,topPipeImg);
 		pipes.add(topPipe);
 		
-		int botPipeY= centerY + Consts.pipe_Gap/2;
+		int botPipeY= centerY + Consts.pipe_Gap/2;	
 		Pipe bottomPipe= new Pipe(Consts.WIDTH, botPipeY, Consts.pipe_Width, Consts.pipe_Height,bottomPipeImg);
 		pipes.add(bottomPipe);
 //		int randomPipeY = (int) (-Consts.pipe_Width / 4 - Math.random() * (Consts.pipe_Height / 2));
@@ -129,9 +131,18 @@ public class Controller extends JPanel implements ActionListener, KeyListener {
 			
 			if(!pipe.getPassed() && bird.getDx() >pipe.getX() + Consts.pipe_Width ) { 
 				pipe.setPassed(true);
-				score++;
+				sound.playSound("/Sound/sound_passed.wav");
+				score+=0.5;
+				//if(score %10 == 0) pipe.setVelocityX(pipe.getVelocityX()-1);
 			}
-			if(collision(bird, pipe)) gameOver = true;
+			
+			 if(collision(bird, pipe)) gameOver = true;
+			 if(pipe.getX()+ pipe.getWidth() <0) {// remove pipe 
+				 pipes.remove(i);
+				 i--;
+			 }
+			
+
 		}
 		if(bird.getDy() > Consts.HEIGHT || bird.getDy() < 0) gameOver = true;
 	}

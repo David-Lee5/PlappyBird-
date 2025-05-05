@@ -20,6 +20,12 @@ public class Pipe {
 	public boolean getPassed() {
 		return passed;
 	}
+	public int getVelocityX() {
+		return velocityX;
+	}
+	public void setVelocityX(int velocityX) {
+		this.velocityX = velocityX;
+	}
 	public int getY() {
 		return y;
 	}
@@ -29,14 +35,9 @@ public class Pipe {
 	public int getWidth() {
 		return width;
 	}
-	public void setWidth(int width) {
-		this.width = width;
-	}
+
 	public int getHeight() {
 		return height;
-	}
-	public void setHeight(int height) {
-		this.height = height;
 	}
 	public void setPassed(boolean passed) {
 		this.passed = passed;

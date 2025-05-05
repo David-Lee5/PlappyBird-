@@ -7,7 +7,7 @@ public class Bird {
 	private Image img;
 	private int velocityY = 0;
 	private int gravity = 1;
-
+	
 	public Bird(int dx, int dy, int width, int height, Image img) {
 		this.dx = dx;
 		this.dy = dy;
